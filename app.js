@@ -54,6 +54,7 @@ app.post("/login", async (req, res) => {
       const token = jwt.sign(
         { email: user.email, age: user.age, _id: user._id },
         "secret",
+        { expiresIn: "1m" },
       );
 
       if (user.length == 0) {
@@ -76,6 +77,7 @@ app.get("/profile/:id", async (req, res) => {
 
   jwt.verify(token, "secret", function (err, decoded) {
     if (err) {
+      console.log(err);
       return res.send("Please login again");
     }
     console.log("decoded", decoded);
